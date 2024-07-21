@@ -49,6 +49,15 @@ const customTableLayouts: Record<string, CustomTableLayout> = {
     },
     // fillOpacity: 0.3,
   },
+
+  borderBlue: {
+    hLineColor: function () {
+      return 'blue';
+    },
+    vLineColor: function () {
+      return 'blue';
+    },
+  },
 };
 
 @Injectable()

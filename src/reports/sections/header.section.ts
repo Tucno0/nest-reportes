@@ -20,7 +20,8 @@ const currentDate: Content = {
   text: DateFormatter.getDDMMYYYY(new Date()),
   alignment: 'right',
   margin: [20, 40],
-  width: 150,
+  width: 100,
+  fontSize: 8,
 };
 
 export const headerSection = (options: HeaderOptions): Content => {
@@ -45,12 +46,12 @@ export const headerSection = (options: HeaderOptions): Content => {
             text: title,
             style: {
               fontSize: 22,
+              bold: true,
             },
           },
           headerSubTitle,
         ],
         alignment: 'center',
-        bold: true,
         margin: [0, 20, 0, 0],
       }
     : null;

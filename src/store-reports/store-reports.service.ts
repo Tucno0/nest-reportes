@@ -2,7 +2,11 @@ import { Injectable, NotFoundException, OnModuleInit } from '@nestjs/common';
 import { PrismaClient } from '@prisma/client';
 import { TDocumentDefinitions } from 'pdfmake/interfaces';
 import { PrinterService } from 'src/printer/printer.service';
-import { orderByIdReport } from 'src/reports';
+import {
+  getBasicSvgReport,
+  getEstatisticsReport,
+  orderByIdReport,
+} from 'src/reports';
 
 @Injectable()
 export class StoreReportsService extends PrismaClient implements OnModuleInit {
@@ -38,6 +42,46 @@ export class StoreReportsService extends PrismaClient implements OnModuleInit {
 
     const docDefinition: TDocumentDefinitions = orderByIdReport({
       data: order as any,
+    });
+
+    const doc = this.printerService.createPdf(docDefinition);
+
+    return doc;
+  }
+
+  async getSvgChart() {
+    const docDefinition = await getBasicSvgReport();
+
+    const doc = this.printerService.createPdf(docDefinition);
+
+    return doc;
+  }
+
+  async getStatistics() {
+    const topCountries = await this.customers.groupBy({
+      by: ['country'],
+      _count: {
+        country: true,
+      },
+      orderBy: {
+        _count: {
+          country: 'desc',
+        },
+      },
+      take: 10,
+    });
+
+    console.log(JSON.stringify(topCountries, null, 2));
+
+    const topCountriesData = topCountries.map(({ country, _count }) => ({
+      country: country,
+      customers: _count.country,
+    }));
+
+    const docDefinition = await getEstatisticsReport({
+      title: 'Top countries',
+      subtitle: 'Top 10 countries with more customers',
+      topCountries: topCountriesData,
     });
 
     const doc = this.printerService.createPdf(docDefinition);

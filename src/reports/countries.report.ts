@@ -20,6 +20,7 @@ export const getCountriesReport = (
     header: headerSection({
       title: title ?? 'Countries Report',
       subTitle: subTitle ?? 'List of countries',
+      showDate: true,
     }),
 
     footer: function (currentPage, pageCount, pageSize) {

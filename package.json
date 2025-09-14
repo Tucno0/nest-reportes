@@ -26,7 +26,7 @@
     "@nestjs/mapped-types": "*",
     "@nestjs/platform-express": "^10.0.0",
     "@prisma/client": "^6.4.1",
-    "axios": "^1.7.2",
+    "axios": "^1.12.0",
     "html-to-pdfmake": "^2.5.12",
     "jsdom": "^24.1.0",
     "pdfmake": "^0.2.10",
